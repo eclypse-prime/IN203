@@ -14,4 +14,4 @@ Pour n plus grand, le gain en rapport de temps gagné devient de plus en plus fa
 
 En doublant le nombre de données à traiter, la proportion p passe à 0,95 et f à 0,05.
 
-La loi de Gustafson donne S_s(n) = 
+La loi de Gustafson donne S_s(n) = n + (1-n)s

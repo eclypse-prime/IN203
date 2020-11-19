@@ -11,3 +11,7 @@ Le rapport de temps maximal gagné est donc de 10.
 Pour ce jeu de données spécifiques, si on prend n = 16, on obtien un rapport de temps gagné de 6,4.
 
 Pour n plus grand, le gain en rapport de temps gagné devient de plus en plus faible, il est raisonnable d'utiliser 16 ou moins nœuds de calcul.
+
+En doublant le nombre de données à traiter, la proportion p passe à 0,95 et f à 0,05.
+
+La loi de Gustafson donne S_s(n) = 

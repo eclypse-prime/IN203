@@ -19,3 +19,5 @@ La loi de Gustafson donne S(n) = s(1-n)+n. avec s = 0,25.
 On sait que S(n) = 4, ce qui donne n égal à 5.
 
 On calcule donc S(2n) = S(10) = 7,75.
+
+Alice peut espérer une accélération de 7,75.

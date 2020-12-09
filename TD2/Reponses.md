@@ -21,3 +21,11 @@ On sait que S(n) = 4, ce qui donne n égal à 5.
 On calcule donc S(2n) = S(10) = 7,75.
 
 Alice peut espérer une accélération de 7,75.
+
+# Question du cours n°3
+
+Pour la première version de Mandelbrot, le temps d'exécution avec un seul cœur est de 11,5 secondes, alors que le temps d'exécution sur 16 cœurs est de 2.12 secondes.
+On constate donc un speedup de 5,42.
+Le speedup n'est pas celui attendu car les temps d'exécution de chaque processus sont différents : certains ont plus de calculs à faire que les autres.
+Il faut alors attendre la fin du calcul le plus long avant de rassembler les morceaux d'image. Ce n'est pas optimal
+

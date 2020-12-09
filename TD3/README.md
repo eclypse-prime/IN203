@@ -10,31 +10,31 @@
 
 ## lscpu
 
-Architecture:        x86_64
-CPU op-mode(s):      32-bit, 64-bit
-Byte Order:          Little Endian
-Address sizes:       36 bits physical, 48 bits virtual
-CPU(s):              16
-On-line CPU(s) list: 0-15
-Thread(s) per core:  2
-Core(s) per socket:  8
-Socket(s):           1
-Vendor ID:           AuthenticAMD
-CPU family:          23
-Model:               96
-Model name:          AMD Ryzen 7 4800H with Radeon Graphics
-Stepping:            1
-CPU MHz:             2900.000
-CPU max MHz:         2900.0000
-BogoMIPS:            5800.00
-Virtualization:      AMD-V
-Hypervisor vendor:   Windows Subsystem for Linux
-Virtualization type: container
+Architecture:        x86_64\
+CPU op-mode(s):      32-bit, 64-bit\
+Byte Order:          Little Endian\
+Address sizes:       36 bits physical, 48 bits virtual\
+CPU(s):              16\
+On-line CPU(s) list: 0-15\
+Thread(s) per core:  2\
+Core(s) per socket:  8\
+Socket(s):           1\
+Vendor ID:           AuthenticAMD\
+CPU family:          23\
+Model:               96\
+Model name:          AMD Ryzen 7 4800H with Radeon Graphics\
+Stepping:            1\
+CPU MHz:             2900.000\
+CPU max MHz:         2900.0000\
+BogoMIPS:            5800.00\
+Virtualization:      AMD-V\
+Hypervisor vendor:   Windows Subsystem for Linux\
+Virtualization type: container\
 Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 h
                      t syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 m
                      ovbe popcnt aes xsave osxsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a m
                      isalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc
-                     mwaitx fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni umip rdpid
+                     mwaitx fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni umip rdpid\
 
 
 

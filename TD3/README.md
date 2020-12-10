@@ -59,6 +59,9 @@ séquentiel | 0.0818299  | 1
 4          | 0.0439164  | 1.86
 8          | 0.0436214  | 1.88
 
+
+À nombre de threads égaux, le code avec OpenMP est plus rapide que celui avec threads. 
+
 Le speedup est très faible comparé au nombre de threads, car le produit scalaire est memory-bound, augmenter le nombre de threads améliore donc très peu les performances.
 
 En effet, l'opération effectuée est
@@ -69,7 +72,6 @@ for ( size_t i = 0; i < u.size(); ++i ) {
 ```
 Il y a deux accès mémoire et deux opérations par boucle, donc le produit scalaire est memory-bound.
 
-*Discuter sur ce qu'on observe, la logique qui s'y cache.*
 
 
 

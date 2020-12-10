@@ -103,15 +103,15 @@ k,i,j             | 34.473  | 62.2947
 j,k,i             | 0.62746 | 3422.45 
 k,j,i             | 0.947062| 2267.52 
 
-Sachant que les valeurs des matrices sont stockées sous forme Column Major sur un vecteur, il faut accéder aux valeurs des matrices le plus séquenciellement possible. Il faut donc parcourir toutes les matrices colonne par colonne.
-
+Sachant que les valeurs des matrices sont stockées sous forme Column Major sur un vecteur, il faut accéder aux valeurs des matrices le plus séquenciellement possible. Il faut donc parcourir toutes les matrices colonne par colonne. Les ordres j,k,i et k,j,i sont optimaux.\
+Par la suite, on constate en parallélisant qu'avec l'ordre k,j,i il y a de la concurrence d'accès, que l'on peut régler en plaçant un `#pragma omp atomic` mais cela diminue considérablement les performances. On utilise donc finalement l'ordre j,k,i.
 
 ### OMP sur la meilleure boucle 
 
-`make TestProductMatrix.exe`
-`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 1024; done`
-`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 2048; done`
-`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 512; done`
+`make TestProductMatrix.exe`\
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 1024; done`\
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 2048; done`\
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 512; done`\
 `for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 4096; done`
 
   OMP_NUM         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)

@@ -92,6 +92,8 @@ On lance TestProduct.exe avec l'ordre de base des boucles, pour les dimensions 1
 1024   | 9.17872 | 233.963     
 1025   | 0.980797 | 2195.95     
 
+On constate que l'exécution avec une dimension de 1024 est beaucoup plus lente. Cela s'explique par le fait que à chaque saut de colonne, le cache doit se vider puis se réécrire au même endroit, car 1024 est un multiple du nombre de blocs mémoire dans le cache. Avec une dimension de 1023 ou 1025, ce problème n'existe pas. 
+
   ordre           | time    | MFlops  | MFlops(n=2048) 
 ------------------|---------|---------|----------------
 i,j,k (origine)   | 2.73764 | 782.476 |                

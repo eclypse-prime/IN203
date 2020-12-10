@@ -186,4 +186,4 @@ On constate que la version par blocs est bien plus rapide que la version scalair
 ## Ensemble de Bhudda
 
 `make bhudda.exe`\
-`for i in 1 2 3 4 6 8 12 16; do export OMP_NUM_THREADS=$i; ./bhudda.exe; done`
+`for i in 1 2 3 4 6 8 12 16; do echo Nombre de threads : $i; export OMP_NUM_THREADS=$i; ./bhudda.exe; echo; done`

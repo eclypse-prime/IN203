@@ -174,11 +174,11 @@ On peut tout de même améliorer la performance encore plus car le produit par b
 
 Ici on constate que les performances sont meilleures pour n = 32.
 
-On compare la version scalaire parallélisée à la version par blocs parallélisée, le tout à 16 threads.
+On compare la version scalaire parallélisée à la meilleure version (szBlock = 32) par blocs parallélisée, le tout à 16 threads.
 
-Version           | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096) | MFlops moyen |
-------------------|---------|----------------|----------------|----------------|--------------|
-Scalaire          | 25887.1 | 19885.3        | 24660.8        | 12019.1        | 20613.075    |
-Par blocs         | 27656.3 | 27827.2        | 22544.7        | 26565.9        | 26148.525    |
+Version                | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096) | MFlops moyen |
+-----------------------|---------|----------------|----------------|----------------|--------------|
+Scalaire               | 25887.1 | 19885.3        | 24660.8        | 12019.1        | 20613.075    |
+Par blocs (szBlock=32) | 27656.3 | 27827.2        | 22544.7        | 26565.9        | 26148.525    |
 
 On constate que la version par blocs est bien plus rapide que la version scalaire, surtout pour les n grands.

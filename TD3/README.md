@@ -42,15 +42,32 @@ Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cm
 
 *Expliquer les paramètres, les fichiers, l'optimisation de compil, NbSamples, ...*
 
-OMP_NUM    | samples=1024 
------------|--------------
-séquentiel | 0.0818299  
-1          | 0.0892672  
-2          | 0.0535898  
-3          | 0.0448287  
-4          | 0.0439164  
-8          | 0.0436214  
+On ajoute avant la boucle for la ligne suivante pour paralléliser le produit scalaire
+```C++
+#pragma omp parallel for reduction (+:scal)
+for ( size_t i = 0; i < u.size(); ++i ) {
+    scal += u[i]*v[i];
+}
+```
 
+OMP_NUM    | samples=1024 | speedup
+-----------|--------------|-----
+séquentiel | 0.0818299  | 1
+1          | 0.0892672  | 0.92
+2          | 0.0535898  | 1.53
+3          | 0.0448287  | 1.82
+4          | 0.0439164  | 1.86
+8          | 0.0436214  | 1.88
+
+Le speedup est très faible comparé au nombre de threads, car le produit scalaire est memory-bound, augmenter le nombre de threads améliore donc très peu les performances.
+
+En effet, l'opération effectuée est
+``` C++
+for ( size_t i = 0; i < u.size(); ++i ) {
+    scal += u[i]*v[i];
+}
+```
+Il y a deux accès mémoire et deux opérations par boucle, donc le produit scalaire est memory-bound.
 
 *Discuter sur ce qu'on observe, la logique qui s'y cache.*
 
@@ -66,6 +83,8 @@ séquentiel | 0.0818299
 *Expliquer comment est compilé le code (ligne de make ou de gcc) : on aura besoin de savoir l'optim, les paramètres, etc. Par exemple :*
 
 `make TestProduct.exe && ./TestProduct.exe 1024`
+
+Tous les n incréments ???
 
 
   ordre           | time    | MFlops  | MFlops(n=2048) 

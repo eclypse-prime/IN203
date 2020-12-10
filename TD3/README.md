@@ -182,3 +182,8 @@ Scalaire               | 25887.1 | 19885.3        | 24660.8        | 12019.1    
 Par blocs (szBlock=32) | 27656.3 | 27827.2        | 22544.7        | 26565.9        | 26148.525    |
 
 On constate que la version par blocs est bien plus rapide que la version scalaire, surtout pour les n grands.
+
+## Ensemble de Bhudda
+
+`make bhudda.exe`\
+`for i in 1 2 3 4 6 8 12 16; do export OMP_NUM_THREADS=$i; ./bhudda.exe; done`

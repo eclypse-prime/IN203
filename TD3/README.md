@@ -94,34 +94,36 @@ On lance TestProduct.exe avec l'ordre de base des boucles, pour les dimensions 1
 
 On constate que l'exécution avec une dimension de 1024 est beaucoup plus lente. Cela s'explique par le fait que à chaque saut de colonne, le cache doit se vider puis se réécrire au même endroit, car 1024 est un multiple du nombre de blocs mémoire dans le cache. Avec une dimension de 1023 ou 1025, ce problème n'existe pas. 
 
-  ordre           | time    | MFlops  | MFlops(n=2048) 
-------------------|---------|---------|----------------
-i,j,k (origine)   | 2.73764 | 782.476 |                
-j,i,k             |  |  |    
-i,k,j             |  |  |    
-k,i,j             |  |  |    
-j,k,i             |  |  |    
-k,j,i             |  |  |    
+  ordre           | time    | MFlops  
+------------------|---------|---------
+i,j,k (origine)   | 9.53381 | 225.249              
+j,i,k             | 9.19872 | 233.455   
+i,k,j             | 30.4662 | 70.4875 
+k,i,j             | 34.473  | 62.2947   
+j,k,i             | 0.62746 | 3422.45 
+k,j,i             | 0.947062| 2267.52 
 
-
-*Discussion des résultats*
-
+Sachant que les valeurs des matrices sont stockées sous forme Column Major sur un vecteur, il faut accéder aux valeurs des matrices le plus séquenciellement possible. Il faut donc parcourir toutes les matrices colonne par colonne.
 
 
 ### OMP sur la meilleure boucle 
 
-`make TestProduct.exe && OMP_NUM_THREADS=8 ./TestProduct.exe 1024`
+`make TestProductMatrix.exe`
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 1024; done`
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 2048; done`
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 512; done`
+`for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 4096; done`
 
   OMP_NUM         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
 ------------------|---------|----------------|----------------|---------------
-1                 |  |
-2                 |  |
-3                 |  |
-4                 |  |
-5                 |  |
-6                 |  |
-7                 |  |
-8                 |  |
+1                 | 3366.12 | 3276.19 | 3942.55 | 3330.35
+2                 | 6614.45 | 6561.51 | 7804.47 | 6483.75
+3                 | 9156.41 | 9680.42 | 11249.7 | 9480.16
+4                 | 11893.7 | 11672.5 | 14251   | 12116.5
+5                 | 14817.5 | 13555   | 16992.6 | 13494
+6                 | 14943.8 | 13689.1 | 11427.8 | 13662.4
+7                 | 15841.1 | 13918.8 | 17235.6 | 12352.5	
+8                 | 17070.8 | 14271.8 | 19454.9 | 12079.9
 
 
 

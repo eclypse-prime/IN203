@@ -44,12 +44,12 @@ Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cm
 
 OMP_NUM    | samples=1024 | 
 -----------|--------------|----------
-séquentiel |   | 
-1          |   | 
-2          |   | 
-3          |   | 
-4          |   | 
-8          |   | 
+séquentiel | 0.0818299  | 
+1          | 0.0892672  | 
+2          | 0.0535898  | 
+3          | 0.0448287  | 
+4          | 0.0439164  | 
+8          | 0.0436214  | 
 
 
 *Discuter sur ce qu'on observe, la logique qui s'y cache.*

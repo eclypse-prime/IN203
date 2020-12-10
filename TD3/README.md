@@ -114,7 +114,7 @@ Par la suite, on constate en parallélisant qu'avec l'ordre k,j,i il y a de la c
 `for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 512; done`\
 `for ((i=1;i<=8;i++)); do OMP_NUM_THREADS=$i; ./TestProductMatrix.exe 4096; done`
 
-  OMP_NUM         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
+  OMP_NUM_THREADS | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
 ------------------|---------|----------------|----------------|---------------
 1                 | 3366.12 | 3276.19 | 3942.55 | 3330.35
 2                 | 6614.45 | 6561.51 | 7804.47 | 6483.75
@@ -131,9 +131,9 @@ On constate qu'à n=4096,  les performances chutent rapidement à nombre de cœu
 
 ### Produit par blocs
 
-`make TestMatrixProduct.exe`\
+`make TestMatrixProduct.exe`\ après avoir changé szBlock dans ProdMatMat.cpp
 `export OMP_NUM_THREADS=16`\
-`./TestMatrixProduct.exe`
+`./TestMatrixProduct.exe`\
 `for i in 1024 2048 512 4096; do ./TestProductMatrix.exe $i; done`
 
   szBlock         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)| MFlops moyen
@@ -146,31 +146,39 @@ origine (=max)    | 26124.7 | 18822.7 | 22404   | 11829.5 | 19795,225
 512               | 24977.7 | 23286.6 | 23657.8 | 25191.5 | 24278,4
 1024              | 26175.4 | 23417.5 | 22593.1 | 22865.3 | 23762,825
 
-On constate la meilleure performance en moyenne pour n=256.
-
+On constate la meilleure performance en moyenne pour n=256.\
+On peut tout de même améliorer la performance encore plus car le produit par blocs n'est pas parallélisé.
 
 ### Bloc + OMP
-
-
+`make TestMatrixProduct.exe`\ après avoir changé szBlock dans ProdMatMat.cpp
+`export OMP_NUM_THREADS=8; for i in 1024 2048 512 4096; do ./TestProductMatrix.exe $i; done; export OMP_NUM_THREADS=16; for i in 1024 2048 512 4096; do ./TestProductMatrix.exe $i; done`
 
   szBlock      | OMP_NUM | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
----------------|---------|---------|------------------------------------------------
-A.nbCols       |  1      |         | 
-512            |  8      |         | 
+---------------|---------|---------|----------------|----------------|---------------
 
+| szBlock | OMP_NUM_THREADS | MFlops  | MFlops(n=2048) | MFlops(n=512) | MFlops(n=4096) | MFlops moyen |
+|---------|-----------------|---------|----------------|---------------|----------------|--------------|
+|A.nbCols | 1               | 3517.63 | 3342.21        | 4002.79       | 3409.7         | 3568.0825    |
+| 32      | 8               | 16217.4 | 23128.7        | 18191.1       | 21766.5        | 19825.925    |
+| 32      | 16              | 27656.3 | 27827.2        | 22544.7       | 26565.9        | 26148.525    |
+| 64      | 8               | 19734.9 | 21082.9        | 15794.7       | 21264.8        | 19469.325    |
+| 64      | 16              | 27731.9 | 28074.6        | 18977.9       | 28232.3        | 25754.175    |
+| 128     | 8               | 24217.4 | 22662          | 14229.7       | 23203          | 21078.025    |
+| 128     | 16              | 20616.4 | 29814.4        | 9838.46       | 22739.4        | 20752.165    |
+| 256     | 8               | 15812.4 | 20158.4        | 8525.6        | 20377          | 16218.35     |
+| 256     | 16              | 17175.5 | 21491.1        | 8296.8        | 11257.5        | 14555.225    |
+| 512     | 8               | 7342.11 | 14003.2        | 4508.85       | 12400.5        | 9563.665     |
+| 512     | 16              | 8034.72 | 13979.9        | 4463.85       | 11582.7        | 9515.2925    |
+| 1024    | 8               | 3768.48 | 6061.4         | 4639          | 11081.1        | 6387.495     |
+| 1024    | 16              | 3724.58 | 6062.1         | 4488.7        | 11019.6        | 6323.745     |
 
+Ici on constate que les performances sont meilleures pour n = 32.
 
+On compare la version scalaire parallélisée à la version par blocs parallélisée, le tout à 16 threads.
 
+Version           | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096) | MFlops moyen |
+------------------|---------|----------------|----------------|----------------|--------------|
+Scalaire          | 25887.1 | 19885.3        | 24660.8        | 12019.1        | 20613.075    |
+Par blocs         | 27656.3 | 27827.2        | 22544.7        | 26565.9        | 26148.525    |
 
-
-
-# Tips 
-
-```
-	env 
-	OMP_NUM_THREADS=4 ./dot_product.exe
-```
-
-```
-    $ for i in $(seq 1 4); do elap=$(OMP_NUM_THREADS=$i ./TestProductOmp.exe|grep "Temps CPU"|cut -d " " -f 7); echo -e "$i\t$elap"; done > timers.out
-```
+On constate que la version par blocs est bien plus rapide que la version scalaire, surtout pour les n grands.

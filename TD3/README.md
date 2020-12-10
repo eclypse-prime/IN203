@@ -126,24 +126,25 @@ Par la suite, on constate en parallélisant qu'avec l'ordre k,j,i il y a de la c
 8                 | 17070.8 | 14271.8 | 19454.9 | 12079.9
 16                | 25887.1 | 19885.3 | 24660.8 | 12019.1
 
-
+On constate qu'à n=4096,  les performances chutent rapidement à nombre de cœurs élevés.
 
 
 ### Produit par blocs
 
-`make TestProduct.exe && ./TestProduct.exe 1024`
+`make TestMatrixProduct.exe`\
+`export OMP_NUM_THREADS=16`\
+`./TestMatrixProduct.exe`
+`for i in 1024 2048 512 4096; do ./TestProductMatrix.exe $i; done`
 
   szBlock         | MFlops  | MFlops(n=2048) | MFlops(n=512)  | MFlops(n=4096)
 ------------------|---------|----------------|----------------|---------------
-origine (=max)    |  |
-32                |  |
-64                |  |
-128               |  |
-256               |  |
-512               |  | 
-1024              |  |
-
-
+origine (=max)    | 26124.7 | 18822.7 | 22404   | 11829.5
+32                | 12516.3 | 12133   | 11871.7 | 11367.9
+64                | 22318.9 | 20484.5 | 18086.1 | 20002.4
+128               | 24144.8 | 17846.6 | 22336.3 | 19345.6
+256               | 26400.1 | 24448   | 23821.8 | 25079.5
+512               | 24977.7 | 23286.6 | 23657.8 | 25191.5
+1024              | 26175.4 | 23417.5 | 22593.1 | 22865.3
 
 
 ### Bloc + OMP

@@ -40,7 +40,7 @@ Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cm
 
 ## Produit scalaire 
 
-*Expliquer les paramètres, les fichiers, l'optimisation de compil, NbSamples, ...*
+`make dotproduct.exe; export OMP_NUM_THREADS=8; ./dotproduct.exe`
 
 On ajoute avant la boucle for la ligne suivante pour paralléliser le produit scalaire
 ```C++
@@ -82,12 +82,15 @@ Il y a deux accès mémoire et deux opérations par boucle, donc le produit scal
 
 ### Permutation des boucles
 
-*Expliquer comment est compilé le code (ligne de make ou de gcc) : on aura besoin de savoir l'optim, les paramètres, etc. Par exemple :*
-
 `make TestProduct.exe && ./TestProduct.exe 1024`
 
-Tous les n incréments ???
+On lance TestProduct.exe avec l'ordre de base des boucles, pour les dimensions 1023, 1024, et 1025.
 
+  dimension          | time    | MFlops  
+------------------|---------|---------
+1023   | 0.909666 | 2353.83           
+1024   | 9.17872 | 233.963     
+1025   | 0.980797 | 2195.95     
 
   ordre           | time    | MFlops  | MFlops(n=2048) 
 ------------------|---------|---------|----------------

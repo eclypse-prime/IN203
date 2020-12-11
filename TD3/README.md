@@ -187,3 +187,34 @@ On constate que la version par blocs est bien plus rapide que la version scalair
 
 `make bhudda.exe`\
 `for i in 1 2 3 4 6 8 12 16; do echo Nombre de threads : $i; export OMP_NUM_THREADS=$i; ./bhudda.exe; echo; done`
+
+On modifie la boucle for dans la fonction bhuddabrot de cette façon afin de la rendre parallélisable :
+
+``` C++
+#pragma omp parallel for
+for (unsigned long iSample = 0; iSample < nbSamples; iSample++) {
+    Complex c0;
+    Complex c;
+    do {
+        float r = genNorm();
+        float angle = genAngle();
+        c = { r * std::cos(angle), r * std::sin(angle) };
+        c0 = {c.re,c.im};
+    } while (!test_mandelbrot_divergent(maxIter, c0));
+    comp_mandelbrot_orbit( maxIter, c0, width, height, image );
+}
+```
+
+On obtient les données suivantes :
+
+| OMP_NUM_THREADS | Temps calcul Bhudda 1 | Temps calcul Bhudda 2 | Temps calcul Bhudda 3 | Temps calcul total | Speedup    |
+|-----------------|-----------------------|-----------------------|-----------------------|--------------------|------------|
+| Séquentiel      | 3.40389               | 3.14729               | 0.198484              | 6.749664           | 1          |
+| 1               | 3.49267               | 3.23938               | 0.20017               | 6.93222            | 0.97366558 |
+| 2               | 1.8095                | 1.5917                | 0.100671              | 3.501871           | 1.92744507 |
+| 3               | 1.94118               | 1.27598               | 0.0732066             | 3.2903666          | 2.05134103 |
+| 4               | 1.2427                | 0.975216              | 0.0619277             | 2.2798437          | 2.9605819  |
+| 6               | 1.84626               | 0.791108              | 0.0500892             | 2.6874572          | 2.51154288 |
+| 8               | 1.55975               | 0.642295              | 0.0451691             | 2.2472141          | 3.00356962 |
+| 12              | 1.3721                | 0.525057              | 0.0345345             | 1.9316915          | 3.49417285 |
+| 16              | 1.38202               | 0.510992              | 0.0358524             | 1.9288644          | 3.4992942  |

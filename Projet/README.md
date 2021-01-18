@@ -89,3 +89,11 @@ Le script `benchmark.bat` lance les programmes pour un nombre de cœurs allant d
 | 16      | 4.14617 | 120.593 | 6.528562767 | 3.93503     | 127.064 | 6.878884341 | 3.74291 | 133.586 | 7.231966911 |
 
 ![alt text](https://github.com/arthurliu2022/IN203/blob/main/Projet/results/results.png?raw=true)
+
+On constate des résultats relativement proches. La performance la plus élevée a été atteinte sur l'implémentation avec OMP+Threads, avec 15 threads. Le speedup obtenu est de 7.606217112, ce qui permet d'afficher la simulation à 139.5 FPS (images par secondes).
+
+En moyenne, l'implémentation MPI a des meilleures performances en nombre de threads élevé.
+
+On constate une baisse des performances après 8 cœurs puis une remontée. Ceci est dû au passage en hyperthreading (mon processeur ayant 8 cœurs 16 threads).
+
+

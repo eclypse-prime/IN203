@@ -61,6 +61,16 @@ Dans le fichier `colonisation.cpp`, l'affichage et le calcul ont été parallél
 
 Dans le fichier `colonisation_MPI.cpp`, l'affichage est réalisé par le thread principal, le thread 0, les autres threads effectuant les calculs. Le thread 0 reçoit simplement les données calculées par les autres threads, et envoie en retour les données correspondants aux cellules fantômes pour permettre aux autres threads de calculer correctement l'expansion des civilisations.
 
+## Conflits mémoires éventuels
+
+Il peut y avoir une écriture simultanée :
+- Si deux civilisations s'étendent sur la même case (pas de problème dans ce cas, la case finira quand-même habitée)
+- Si une civilisation s'étend sur une case qui devient inhabitable.
+- Si une civilisation s'étend sur une case qui devient inhabitée.
+
+En théorie, les deux derniers problèmes ne devraient pas survenir, car le programme vérifie si une case est bien inhabitée avant d'essayer d'écrire dessus.
+
+Il serait possible de régler définitivement ces problèmes en rendant l'écriture critique avec `#pragma omp critical` mais le prix en performance serait extrèmement élevé.
 
 ## Performance
 
@@ -94,6 +104,8 @@ On constate des résultats relativement proches. La performance la plus élevée
 
 En moyenne, l'implémentation MPI a des meilleures performances en nombre de threads élevé.
 
+L'implémentation la plus lente est celle avec OMP seul.
+
 On constate une baisse des performances après 8 cœurs puis une remontée. Ceci est dû au passage en hyperthreading (mon processeur ayant 8 cœurs 16 threads).
 
-
+La différence entre l'implémentation OMP+Threads et OMP seul est faible à nombre de cœurs faibles, en effet, avec mon ordinateur, l'affichage prend seulement 1ms, par rapport à un calcul qui prend plus de 50ms à un cœur. Donc paralléliser l'affichage et le calcul ne change presque rien au départ. La différence devient plus marquante à nombre de cœurs élevés.

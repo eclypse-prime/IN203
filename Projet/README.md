@@ -35,9 +35,11 @@ Un fichier `benchmark.bat` a été écrit pour pouvoir lancer tous les benchmark
 
 Dans le fichier `paramètres.cpp`, la parallélisation s'est effectuée en utilisant OMP, en parallélisant la boucle dans la fonction `mise_a_jour()`. Il s'agissait d'ajouter une ligne `#pragma omp parallel for simd` devant la boucle for.
 
+Le mot-clé `simd` permet de demander au compilateur d'utiliser les optimisation SIMD de vectorisation à l'échelle du cœur de processeur.
+
 Une déclaration des indices de la boucle for qui était faite au départ avant le for a été replacée à l'intérieur du for. Cela a permis de rendre les indices i,j privés et permettre une parallélisation correcte du code.
 
-Le générateur de nombre aléatoires a été modifié, en utilisant cette implémentation du générateur **Mersenne Twister** qui gère la parallélisation.
+Le générateur de nombre aléatoires a été modifié, en utilisant cette implémentation du générateur de nombres pseudo-aléatoires **Mersenne Twister** qui gère la parallélisation, contrairement à `rand()`.
 
 ```C++
 double random_threaded_double() {
@@ -52,6 +54,13 @@ int random_direction() {
     return distribution(generator);
 }
 ```
+
+
+Dans le fichier `colonisation.cpp`, l'affichage et le calcul ont été parallélisés. Pour cela, un thread a été créé, dans lequel l'affichage est effectué. Le calcul se fait dans le thread principal, en appellant la version parallélisée avec OMP de `mise_a_jour()`.
+
+
+Dans le fichier `colonisation_MPI.cpp`, l'affichage est réalisé par le thread principal, le thread 0, les autres threads effectuant les calculs. Le thread 0 reçoit simplement les données calculées par les autres threads, et envoie en retour les données correspondants aux cellules fantômes pour permettre aux autres threads de calculer correctement l'expansion des civilisations.
+
 
 ## Performance
 

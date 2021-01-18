@@ -88,4 +88,4 @@ Le script `benchmark.bat` lance les programmes pour un nombre de cœurs allant d
 | 15      | 4.19794 | 119.106 | 6.448060807 | 3.55873     | 140.499 | 7.606217112 | 3.58546 | 139.452 | 7.549535503 |
 | 16      | 4.14617 | 120.593 | 6.528562767 | 3.93503     | 127.064 | 6.878884341 | 3.74291 | 133.586 | 7.231966911 |
 
-
+![alt text](https://github.com/arthurliu2022/IN203/blob/main/Projet/results/results.png?raw=true)

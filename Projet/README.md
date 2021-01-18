@@ -29,7 +29,29 @@ Des sources "benchmark" ont été créées, dans le but de comparer les performa
 - `colonisation_benchmark2.cpp` pour la méthode OpenMP seulement
 - `colonisation_benchmark3.cpp` pour la méthode MPI seulement
 
-Un fichier `benchmark.bat` a été écrit pour pouvoir lancer tous les benchmarks à la suite puis écrire le résultat dans un fichier `benchmark.csv`.
+Un fichier `benchmark.bat` a été écrit pour pouvoir lancer tous les benchmarks à la suite puis écrire tous les résultats dans un fichier `benchmark.csv`. Ce format a été choisi explicitement pour pouvoir visualiser et traiter ces résultats avec un logiciel de type Excel.
+
+## Implémentation
+
+Dans le fichier `paramètres.cpp`, la parallélisation s'est effectuée en utilisant OMP, en parallélisant la boucle dans la fonction `mise_a_jour()`. Il s'agissait d'ajouter une ligne `#pragma omp parallel for simd` devant la boucle for.
+
+Une déclaration des indices de la boucle for qui était faite au départ avant le for a été replacée à l'intérieur du for. Cela a permis de rendre les indices i,j privés et permettre une parallélisation correcte du code.
+
+Le générateur de nombre aléatoires a été modifié, en utilisant cette implémentation du générateur **Mersenne Twister** qui gère la parallélisation.
+
+```C++
+double random_threaded_double() {
+    thread_local static std::mt19937 generator(std::random_device{}());
+    std::uniform_real_distribution<double> distribution(0., 1.);
+    return distribution(generator);
+}
+
+int random_direction() {
+    thread_local static std::mt19937_64 generator(std::random_device{}());
+    std::uniform_int_distribution<int> distribution(0, 3);
+    return distribution(generator);
+}
+```
 
 ## Performance
 

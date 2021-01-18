@@ -25,7 +25,7 @@ J'ai modifié et écrit plusieurs sources pour pouvoir tester et comparer les di
 - `colonisation_mpi.cpp` a été parallélisé avec MPI.
 
 Des sources "benchmark" ont été créées, dans le but de comparer les performances selon différentes méthodes : 
-- `colonisation_benchmark1.cpp` pour la méthode OpenMP + Threads
+- `colonisation_benchmark.cpp` pour la méthode OpenMP + Threads
 - `colonisation_benchmark2.cpp` pour la méthode OpenMP seulement
 - `colonisation_benchmark3.cpp` pour la méthode MPI seulement
 
@@ -64,9 +64,13 @@ Dans le fichier `colonisation_MPI.cpp`, l'affichage est réalisé par le thread 
 
 ## Performance
 
+Les calculs de performance ont été réalisés avec les fichiers `colonisation_benchmark.exe`, `colonisation_benchmark2.exe`, `colonisation_benchmark3.exe`, compilés à partir des sources respectives `colonisation_benchmark.cpp`, `colonisation_benchmark2.cpp`, `colonisation_benchmark3.cpp`, ainsi que des autres sources : `galaxie.cpp`, `parametres.cpp`.
+
+Le script `benchmark.bat` lance les programmes pour un nombre de cœurs allant de 1 à 16 (maximum sur ma machine 8 cœurs 16 threads), et donne les résultats suivants :
+
 |         | OMP     |         |             | OMP+Threads |         |             | MPI     |         |             |
 |---------|---------|---------|-------------|-------------|---------|-------------|---------|---------|-------------|
-| Threads | Temps   | FPS     | Speedup     | Temps       | FPS     | Speedup     | Temps   | FPS     | Speedup     |
+| Threads | Temps (s)  | FPS     | Speedup     | Temps (s)      | FPS     | Speedup     | Temps (s)  | FPS     | Speedup     |
 | 1       | 27.0686 | 18.4716 |           1 | 26.7193     | 18.7131 | 1.013074125 |         |         |             |
 | 2       | 13.9216 | 35.9153 | 1.944352411 | 13.9649     | 35.8041 | 1.938332359 | 26.4343 | 18.9148 |  1.02399359 |
 | 3       | 9.63876 | 51.8739 | 2.808305723 | 9.53098     | 52.4605 | 2.840062583 | 13.2307 | 37.7909 | 2.045892072 |
@@ -83,3 +87,5 @@ Dans le fichier `colonisation_MPI.cpp`, l'affichage est réalisé par le thread 
 | 14      | 4.42426 | 113.013 | 6.118203079 | 3.85676     | 129.642 | 7.018449945 | 3.64531 | 137.163 |  7.42561554 |
 | 15      | 4.19794 | 119.106 | 6.448060807 | 3.55873     | 140.499 | 7.606217112 | 3.58546 | 139.452 | 7.549535503 |
 | 16      | 4.14617 | 120.593 | 6.528562767 | 3.93503     | 127.064 | 6.878884341 | 3.74291 | 133.586 | 7.231966911 |
+
+

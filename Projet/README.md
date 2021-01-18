@@ -24,6 +24,14 @@ J'ai modifié et écrit plusieurs sources pour pouvoir tester et comparer les di
 - `colonisation.cpp` a été parallélisé avec Threads pour afficher et calculer simultanément.
 - `colonisation_mpi.cpp` a été parallélisé avec MPI.
 
+Des sources "benchmark" ont été créées, dans le but de comparer les performances selon différentes méthodes : 
+- `colonisation_benchmark1.cpp` pour la méthode OpenMP + Threads
+- `colonisation_benchmark2.cpp` pour la méthode OpenMP seulement
+- `colonisation_benchmark3.cpp` pour la méthode MPI seulement
+
+Un fichier `benchmark.bat` a été écrit pour pouvoir lancer tous les benchmarks à la suite puis écrire le résultat dans un fichier `benchmark.csv`.
+
+## Performance
 
 |         | OMP     |         |             | OMP+Threads |         |             | MPI     |         |             |
 |---------|---------|---------|-------------|-------------|---------|-------------|---------|---------|-------------|

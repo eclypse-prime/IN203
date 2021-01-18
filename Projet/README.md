@@ -6,6 +6,24 @@ Cette parallélisation s'est effectuée avec différentes méthodes : OpenMP, Th
 
 Ces différentes méthodes ont permis de paralléliser le code sans changer son résultat, mais avec des performances légèrement différentes.
 
+## Compilation
+
+Mon projet a la particularité d'avoir été effectué sur Windows. En effet, j'ai installé la librairie graphique SDL2 sur Windows, et ai modifié le fichier Makefile utilissé pour compiler le projet afin de le faire fonctionner avec mingw32-make, qui remplit la même fonction.
+
+Les étapes que j'ai suivies sont documentées sur ce git : https://github.com/arthurliu2022/in203-win
+
+Pour résumer, il s'agissait d'installer la librairie SDL2 dans le dossier de MinGW, puis d'ajouter des bibliothèques .dll nécéssaires pour exécuter un programme avec SDL2. Ensuite, l'ajout des chemins dans la variable d'environnement PATH et l'ajout d'un alias pour appeller mingw32-make.
+
+J'ai également installé MS-MPI, l'implémentation Windows de MPI afin de pouvoir tester la parallélisation avec MPI.
+
+## Les programmes
+
+J'ai modifié et écrit plusieurs sources pour pouvoir tester et comparer les différents façon de paralléliser la simulation.
+
+- `paramètres.cpp` a été parallélisé avec OpenMP.
+- `colonisation.cpp` a été parallélisé avec Threads pour afficher et calculer simultanément.
+- `colonisation_mpi.cpp` a été parallélisé avec MPI.
+
 
 |         | OMP     |         |             | OMP+Threads |         |             | MPI     |         |             |
 |---------|---------|---------|-------------|-------------|---------|-------------|---------|---------|-------------|
